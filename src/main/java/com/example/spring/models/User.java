@@ -90,8 +90,7 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name) &&
+        return  Objects.equals(name, user.name) &&
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(phoneNumber, user.phoneNumber);
@@ -99,6 +98,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, lastName, email, phoneNumber);
+        return Objects.hash(id);
     }
 }
