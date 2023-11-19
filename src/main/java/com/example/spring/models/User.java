@@ -34,6 +34,9 @@ public class User {
     @Pattern(regexp = "[0-9]{10}", message = "Phone number must be 10 digits")
     @Column(name = "phone_number")
     private String phoneNumber;
+    @NotBlank(message = "Password is required")
+    @Column(name = "password", nullable = false)
+    private String password;
 
     public int getId() {
         return id;
@@ -73,6 +76,14 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

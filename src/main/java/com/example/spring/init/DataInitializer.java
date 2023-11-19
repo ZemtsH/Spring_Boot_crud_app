@@ -1,10 +1,10 @@
 package com.example.spring.init;
 
-import com.example.spring.models.User;
-import com.example.spring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import com.example.spring.models.User;
+import com.example.spring.repositories.UserRepository;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -14,25 +14,20 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User user1 = new User();
-        user1.setName("Vasya");
-        user1.setLastName("Pupkin");
-        user1.setEmail("v.pupkin@example.com");
-        user1.setPhoneNumber("1234567890");
-        userRepository.save(user1);
+        createUser("Vasya", "Pupkin", "v.pupkin@example.com", "1234567890", "password1");
+        createUser("Petya", "Petushok", "p.petushok@example.com", "9876543210", "password2");
+        createUser("Katya", "Kotik", "k.kotik@example.com", "0123456789", "password3");
+    }
 
-        User user2 = new User();
-        user2.setName("Petya");
-        user2.setLastName("Petushok");
-        user2.setEmail("p.petushok@example.com");
-        user2.setPhoneNumber("9876543210");
-        userRepository.save(user2);
-
-        User user3 = new User();
-        user3.setName("Katya");
-        user3.setLastName("Kotik");
-        user3.setEmail("k.kotik@example.com");
-        user3.setPhoneNumber("0123456789");
-        userRepository.save(user3);
+    private void createUser(String name, String lastName, String email, String phoneNumber, String password) {
+        if (userRepository.findByName(name) == null) {
+            User user = new User();
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setPhoneNumber(phoneNumber);
+            user.setPassword(password);
+            userRepository.save(user);
+        }
     }
 }
