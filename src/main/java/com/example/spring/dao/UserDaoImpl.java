@@ -1,14 +1,18 @@
 package com.example.spring.dao;
 
 import com.example.spring.models.User;
+import com.example.spring.service.UserServiceImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -25,8 +29,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) {
-        entityManager.persist(user);
-        entityManager.flush();
+        try {
+            entityManager.persist(user);
+            entityManager.flush();
+            logger.info("User saved successfully: {}", user);
+        } catch (Exception e) {
+            logger.error("Error saving user: {}", e.getMessage(), e);
+        }
     }
 
     @Override

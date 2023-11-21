@@ -2,11 +2,15 @@ package com.example.spring.controllers;
 
 import com.example.spring.models.User;
 import com.example.spring.service.UserService;
+import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequestMapping("/")
 public class UsersController {
@@ -40,10 +44,27 @@ public class UsersController {
         return "new";
     }
 
-    @PostMapping("/users/create")
-    public String createUser(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "redirect:/users";
+    @PostMapping("/users/new")
+    public String createUser(@Valid User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.warn("Form validation errors: {}", bindingResult.getAllErrors());
+            return "redirect:/users";
+        } else {
+            try {
+                log.info("Creating user: {}", user);
+                userService.saveUser(user);
+                return "redirect:/users";
+            } catch (Exception e) {
+                log.error("Error creating user", e);
+                return "error";
+            }
+        }
+        //        if (bindingResult.hasErrors()) {
+//            return "users";
+//        } else {
+//            userService.saveUser(user);
+//            return "redirect:/users";
+//        }
     }
 
     @GetMapping("/user/edit/{id}")

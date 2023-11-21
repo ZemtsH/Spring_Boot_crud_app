@@ -5,13 +5,15 @@ import com.example.spring.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     private final UserDao userDao;
 
     @Autowired
@@ -33,7 +35,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void saveUser(User user) {
+        logger.info("Saving user: {}", user);
         userDao.saveUser(user);
+        logger.info("User saved successfully");
     }
 
     @Override
