@@ -29,13 +29,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void saveUser(User user) {
-        try {
-            entityManager.persist(user);
-            entityManager.flush();
-            logger.info("User saved successfully: {}", user);
-        } catch (Exception e) {
-            logger.error("Error saving user: {}", e.getMessage(), e);
-        }
+        entityManager.merge(user);
     }
 
     @Override

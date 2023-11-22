@@ -45,26 +45,13 @@ public class UsersController {
     }
 
     @PostMapping("/users/new")
-    public String createUser(@Valid User user, BindingResult bindingResult) {
+    public String createUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.warn("Form validation errors: {}", bindingResult.getAllErrors());
-            return "redirect:/users";
+            return "users";
         } else {
-            try {
-                log.info("Creating user: {}", user);
-                userService.saveUser(user);
-                return "redirect:/users";
-            } catch (Exception e) {
-                log.error("Error creating user", e);
-                return "error";
-            }
+            userService.saveUser(user);
+            return "redirect:/users";
         }
-        //        if (bindingResult.hasErrors()) {
-//            return "users";
-//        } else {
-//            userService.saveUser(user);
-//            return "redirect:/users";
-//        }
     }
 
     @GetMapping("/user/edit/{id}")
