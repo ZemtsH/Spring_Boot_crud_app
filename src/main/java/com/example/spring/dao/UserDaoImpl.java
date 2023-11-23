@@ -5,15 +5,11 @@ import com.example.spring.service.UserServiceImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -38,6 +34,8 @@ public class UserDaoImpl implements UserDao {
 
         updatedUser.setName(user.getName());
         updatedUser.setLastName(user.getLastName());
+        updatedUser.setEmail(user.getEmail());
+        updatedUser.setPhoneNumber(user.getPhoneNumber());
 
         entityManager.flush();
     }

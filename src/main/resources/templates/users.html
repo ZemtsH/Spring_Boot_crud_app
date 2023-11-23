@@ -29,7 +29,9 @@
         <td th:text="${user.getEmail()}"></td>
         <td th:text="${user.getPhoneNumber()}"></td>
         <td>
-            <a th:href="@{/user/edit/{id}(id=${user.getId()})}">Edit</a>
+            <form th:action="@{/user/edit/{id}(id=${user.getId()})}" th:method="get" style="display: inline;">
+                <button type="submit" style="border: none; background: none; color: blue; text-decoration: underline; cursor: pointer;">Edit</button>
+            </form>
             <span> | </span>
             <form th:action="@{/user/delete/{id}(id=${user.getId()})}" method="post" style="display: inline;">
                 <input type="hidden" name="_method" value="delete"/>

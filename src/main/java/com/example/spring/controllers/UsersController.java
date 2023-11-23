@@ -3,14 +3,12 @@ package com.example.spring.controllers;
 import com.example.spring.models.User;
 import com.example.spring.service.UserService;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
 @Controller
 @RequestMapping("/")
 public class UsersController {
@@ -31,12 +29,6 @@ public class UsersController {
     public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
-    }
-
-    @GetMapping("/user/{id}")
-    public String showUser(@RequestParam("id") int id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
-        return "show";
     }
 
     @GetMapping("/users/new")
@@ -61,7 +53,7 @@ public class UsersController {
     }
 
     @PatchMapping("/user/update/{id}")
-    public String updateUser(@ModelAttribute("user") User user, @RequestParam("id") int id) {
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable int id) {
         userService.updateUser(id, user);
         return "redirect:/users";
     }
